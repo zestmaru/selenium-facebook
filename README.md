@@ -29,7 +29,7 @@ Parse facebook group 1st page with `Python` and `Selenium`. Will get first post 
         
           sudo apt-get update
 
-          sudo apt-get install chromium-browser
+          sudo apt-get install chromium-chromedriver
         
         chromedriver location: `/usr/lib/chromium-browser/chromedriver`
 
