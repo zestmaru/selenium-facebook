@@ -24,7 +24,9 @@ def parse_group(url: str, debug: bool=False):
         debug (bool): Show debug output
 
     Returns:
-        str: obj formatted to str
+        dict: {'group_name': 'str', 
+        'text': 'str',
+        'image': ['link', 'link', 'link']}
     """
 
     if debug:
