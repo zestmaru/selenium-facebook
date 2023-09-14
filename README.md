@@ -92,7 +92,7 @@ Parse facebook group 1st page with `Python` and `Selenium`. Will get first post 
       curl --location 'http://127.0.0.1:5000/facebook-parse' \
       --header 'Content-Type: application/json' \
       --data '{
-      "url": "https://www.facebook.com/radiorestoran/"
+         "url": "https://www.facebook.com/radiorestoran/"
       }'
 
 ## Tests
