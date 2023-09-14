@@ -9,7 +9,9 @@ def clear_div(div: str, tag: str):
         tag (str): Tag to sort hardcoded regex for each type
 
     Returns:
-        dict: [tag:"[clear text]"]
+        dict: {'text|group_name': 'str'} 
+        or 
+        dict: {'image': ['link', 'link', 'link']}
     """
 
     if tag == "text":
