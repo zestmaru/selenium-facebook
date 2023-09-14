@@ -1,2 +1,5 @@
-[chromedriver]
-chromedriver_path=/usr/lib/chromium-browser/chromedriver
+[browser]
+# Chrome or Firefox
+browser_name=Firefox
+# Full path to the driver
+driver_path=/home/ubuntu/selenium-facebook/geckodriver

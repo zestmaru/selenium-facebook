@@ -1,7 +1,11 @@
 from bs4 import BeautifulSoup
+
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service as CH_SERVICE
+from selenium.webdriver.chrome.options import Options as CH_OPTIONS
+from selenium.webdriver.firefox.service import Service as FF_SERVICE
+from selenium.webdriver.firefox.options import Options as FF_OPTIONS
+
 import time
 import os
 from pathlib import Path
@@ -36,20 +40,27 @@ def parse_group(url: str, debug: bool):
     cfg_path = str(os.path.join(os.path.dirname(__file__), '..' + sep + 'config.cfg'))
 
     config.readfp(open(r''+cfg_path))
-    chromedriver_path = config.get('chromedriver', 'chromedriver_path')
+    driver_path = config.get('browser', 'driver_path')
+    browser_name = config.get('browser', 'browser_name')
 
-    path = Path(chromedriver_path)
+    path = Path(driver_path)
     if path.is_file():
         if debug:
             print(f'The file {path} exists \n\n')
     else:
         raise Exception(f'The file {path} does not exist')
 
-    service = Service(executable_path=r''+chromedriver_path)
-    options = webdriver.ChromeOptions()
-    options.add_argument('--headless')
+    if browser_name == 'Chrome':
+        service = CH_SERVICE(executable_path=r''+driver_path)
+        options = webdriver.ChromeOptions()
+        options.add_argument('--headless')
+        driver = webdriver.Chrome(service=service, options=options)  # init browser
+    if browser_name == 'Firefox':
+        service = FF_SERVICE(executable_path=r''+driver_path)
+        options = webdriver.FirefoxOptions()
+        options.add_argument('--headless')
+        driver = webdriver.Firefox(service=service, options=options)  # init browser
 
-    driver = webdriver.Chrome(service=service, options=options)  # init browser
     driver.get(url)  # open page
     time.sleep(1)
     response = driver.page_source  # get page

@@ -14,9 +14,9 @@ Parse facebook group 1st page with `Python` and `Selenium`. Will get first post 
 
 ## Installation
 
-1. Install browser driver
+1. Install browser driver:
 
-    `Chrome` is used in the code:
+    `Chrome`:
 
     * linux64)
 
@@ -25,17 +25,27 @@ Parse facebook group 1st page with `Python` and `Selenium`. Will get first post 
 
             unzip chromedriver_linux64.zip 
 
-    * arm64)
+    `Firefox`:
 
-            sudo apt-get update
+    * linux64)
 
-            sudo apt-get install chromium-browser
+            wget https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-linux64.tar.gz
 
-1. Enter full path to the chromedriver into the `src/config.cfg`:
+            tar -xf geckodriver-v0.33.0-linux64.tar.gz
 
-        cp src/config.cfg.example src/config.cfg
+1. Create config:
 
-        chromedriver_path=<full path to the chromedriver>
+        `cp src/config.cfg.example src/config.cfg`
+
+1. Edit config
+    
+    And enter full path to the driver:
+
+        driver_path=<full path to the driver>
+    
+    And change `browser_name`:
+        
+        browser_name=<Firefox|Chrome>
 
 ## Usage
 

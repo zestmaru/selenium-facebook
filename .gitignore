@@ -1,8 +1,10 @@
 #driver
 chromedriver
-chromedriver_linux64.zip
+*.zip
+*.gz
 LICENSE.chromedriver
 geckodriver.log
+geckodriver
 
 #cache
 __pycache__
