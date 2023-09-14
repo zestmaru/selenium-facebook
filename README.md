@@ -83,9 +83,11 @@ Parse facebook group 1st page with `Python` and `Selenium`. Will get first post 
 
     1. `ExecStart=flask --app <path>/src/flask-app run` -- path to src folder
 
-    1. `systemctl start facebook-parse`
+    1. `systemctl daemon-reload`
 
-    1. `systemctl enable facebook-parse`
+    1. `sudo systemctl start facebook-parse`
+
+    1. `sudo systemctl enable facebook-parse`
 
 * Request example:
     
