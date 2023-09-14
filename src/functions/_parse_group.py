@@ -42,6 +42,7 @@ def parse_group(url: str, debug: bool):
     config.readfp(open(r''+cfg_path))
     driver_path = config.get('browser', 'driver_path')
     browser_name = config.get('browser', 'browser_name')
+    session_time = config.get('browser', 'session_time')
 
     path = Path(driver_path)
     if path.is_file():
@@ -62,7 +63,7 @@ def parse_group(url: str, debug: bool):
         driver = webdriver.Firefox(service=service, options=options)  # init browser
 
     driver.get(url)  # open page
-    time.sleep(1)
+    time.sleep(session_time)
     response = driver.page_source  # get page
     driver.close()  # close browser
 

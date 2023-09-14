@@ -25,6 +25,14 @@ Parse facebook group 1st page with `Python` and `Selenium`. Will get first post 
 
             unzip chromedriver_linux64.zip 
 
+    * arm64)
+        
+            sudo apt-get update
+
+            sudo apt-get install chromium-browser
+        
+        chromedriver location: `/usr/lib/chromium-browser/chromedriver`
+
     `Firefox`:
 
     * linux64)
@@ -32,6 +40,8 @@ Parse facebook group 1st page with `Python` and `Selenium`. Will get first post 
             wget https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-linux64.tar.gz
 
             tar -xf geckodriver-v0.33.0-linux64.tar.gz
+        
+       Also Firefox binary is required (in `PATH`).
 
 1. Create config:
 
