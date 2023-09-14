@@ -1,0 +1,4 @@
+selenium>=4.1.0
+beautifulsoup4>=4.12.2
+autopep8>=2.0.4
+configparser>=6.0.0

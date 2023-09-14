@@ -1,0 +1,14 @@
+#driver
+chromedriver
+chromedriver_linux64.zip
+LICENSE.chromedriver
+geckodriver.log
+
+#cache
+__pycache__
+
+#tests
+tests/output.txt
+
+#config
+src/config.cfg
