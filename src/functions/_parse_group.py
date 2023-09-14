@@ -28,7 +28,7 @@ def parse_group(url: str, debug: bool=False):
     """
 
     if debug:
-        print("Debug \n")
+        print("[DEBUG] Debug ON \n")
 
     if url == "" or url is None:
         raise Exception("url cannot be empty...")
@@ -47,7 +47,7 @@ def parse_group(url: str, debug: bool=False):
     path = Path(driver_path)
     if path.is_file():
         if debug:
-            print(f'The file {path} exists \n\n')
+            print(f'[DEBUG] The file {path} exists \n\n')
     else:
         raise Exception(f'The file {path} does not exist')
 
@@ -91,14 +91,20 @@ def parse_group(url: str, debug: bool=False):
         "h1", {"class": "x1heor9g x1qlqyl8 x1pd3egz x1a2a7pz"})
 
     if debug:
-        print("group_name = " + " " + str(group_name) + "\n")
-        print("text = " + " " + str(text) + "\n")
-        print("images = " + " " + str(images) + "\n")
+        print("[DEBUG] group_name = " + " " + str(group_name) + "\n")
+        print("[DEBUG] text = " + " " + str(text) + "\n")
+        print("[DEBUG] images = " + " " + str(images) + "\n")
 
     clean_group_name = clear_div(str(group_name), "group_name")
     clean_text = clear_div(str(text), "text")
     clean_image = clear_div(str(images), "image")
     d = clean_group_name | clean_text | clean_image
+
+    if debug:
+        print("[DEBUG] clean_group_name = " + " " + str(clean_group_name) + "\n")
+        print("[DEBUG] clean_text = " + " " + str(clean_text) + "\n")
+        print("[DEBUG] clean_image = " + " " + str(clean_image) + "\n")
+        print("[DEBUG] d = " + " " + str(d) + "\n")
 
     return d
     #json_object = json.dumps(d, indent=4)
