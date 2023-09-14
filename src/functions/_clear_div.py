@@ -14,6 +14,7 @@ def clear_div(div: str, tag: str):
 
     if tag == "text":
         div = re.findall('(?<=start;">)(.*)(?=<)', str(div))
+        div = re.sub("(start;\">)", ">\n", str(div))
         div = re.sub("(<[^>]*>)", "", str(div))
         div = str(div)[2:-2]
     if tag == "image":
