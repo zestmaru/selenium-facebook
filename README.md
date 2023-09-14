@@ -10,7 +10,7 @@ Parse facebook group 1st page with `Python` and `Selenium`. Will get first post 
 
 1. Requirements
 
-        pip install -r requirements.txt
+       pip install -r requirements.txt
 
 ## Installation
 
@@ -21,15 +21,15 @@ Parse facebook group 1st page with `Python` and `Selenium`. Will get first post 
     * linux64)
 
 
-            wget https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip
+          wget https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip
 
-            unzip chromedriver_linux64.zip 
+          unzip chromedriver_linux64.zip 
 
     * arm64)
         
-            sudo apt-get update
+          sudo apt-get update
 
-            sudo apt-get install chromium-browser
+          sudo apt-get install chromium-browser
         
         chromedriver location: `/usr/lib/chromium-browser/chromedriver`
 
@@ -37,36 +37,36 @@ Parse facebook group 1st page with `Python` and `Selenium`. Will get first post 
 
     * linux64)
 
-            wget https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-linux64.tar.gz
+          wget https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-linux64.tar.gz
 
-            tar -xf geckodriver-v0.33.0-linux64.tar.gz
+          tar -xf geckodriver-v0.33.0-linux64.tar.gz
         
        Also Firefox binary is required (in `PATH`).
 
 1. Create config:
 
-        `cp src/config.cfg.example src/config.cfg`
+       cp src/config.cfg.example src/config.cfg
 
 1. Edit config
     
     And enter full path to the driver:
 
-        driver_path=<full path to the driver>
+       driver_path=<full path to the driver>
     
     And change `browser_name`:
         
-        browser_name=<Firefox|Chrome>
+       browser_name=<Firefox|Chrome>
 
 ## Usage
 
 * `$ ./facebook-parse.py`
 
-        usage: facebook-parse.py [-h] [-u url] [-d debug]
+       usage: facebook-parse.py [-h] [-u url] [-d debug]
 
-        options:
-        -h, --help            show this help message and exit
-        -u url, --url url     Get facebook group 1st post text and attached image.
-        -d debug, --debug debug
+       options:
+       -h, --help            show this help message and exit
+       -u url, --url url     Get facebook group 1st post text and attached image.
+       -d debug, --debug debug
                                 Debug output. Default False
 
 ## Tests
@@ -81,4 +81,4 @@ Parse facebook group 1st page with `Python` and `Selenium`. Will get first post 
 
 1. Change style:
 
-        autopep8 <filename.py> --in-place --aggressive
+       autopep8 <filename.py> --in-place --aggressive
