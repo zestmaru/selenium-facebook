@@ -42,7 +42,7 @@ def parse_group(url: str, debug: bool):
     config.readfp(open(r''+cfg_path))
     driver_path = config.get('browser', 'driver_path')
     browser_name = config.get('browser', 'browser_name')
-    session_time = config.get('browser', 'session_time')
+    session_time = int(config.get('browser', 'session_time'))
 
     path = Path(driver_path)
     if path.is_file():
