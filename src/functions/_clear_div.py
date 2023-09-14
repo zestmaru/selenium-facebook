@@ -15,11 +15,13 @@ def clear_div(div: str, tag: str):
     if tag == "text":
         div = re.findall('(?<=start;">)(.*)(?=<)', str(div))
         div = re.sub("(<[^>]*>)", "", str(div))
+        div = str(div)[2:-2]
     if tag == "image":
         div = re.sub("amp;", "", str(div))
         div = re.findall('src\\s*=\\s*"(.+?)"', str(div))
     if tag == "group_name":
         div = re.sub("(<[^>]*>)", "", str(div))
+        div = str(div)[1:-1]
 
     clean = div
     d = dict([(tag, clean)])
