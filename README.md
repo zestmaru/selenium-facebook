@@ -75,7 +75,7 @@ Parse facebook group 1st page with `Python` and `Selenium`. Will get first post 
 
 1. Linux service:
 
-       cp service/facebook-parse.service /etc/systemd/system/facebook-parse.service
+       sudo cp service/facebook-parse.service /etc/systemd/system/facebook-parse.service
     
     Change values:
 
