@@ -49,9 +49,11 @@ Parse facebook group 1st page with `Python` and `Selenium`. Will get first post 
         -d debug, --debug debug
                                 Debug output. Default False
 
-### Tests
+## Tests
 
-* `bash test.sh`
+1. Edit `tests/groups.txt` file
+
+1. Run `bash test.sh`
     
     Will overwrite `output.txt` on each run. 
 
