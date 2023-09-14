@@ -59,6 +59,8 @@ Parse facebook group 1st page with `Python` and `Selenium`. Will get first post 
 
 ## Usage
 
+### Standalone
+
 * `$ ./facebook-parse.py`
 
        usage: facebook-parse.py [-h] [-u url] [-d debug]
@@ -68,6 +70,30 @@ Parse facebook group 1st page with `Python` and `Selenium`. Will get first post 
        -u url, --url url     Get facebook group 1st post text and attached image.
        -d debug, --debug debug
                                 Debug output. Default False
+
+### Flask
+
+1. Linux service:
+
+       cp service/facebook-parse.service /etc/systemd/system/facebook-parse.service
+    
+    Change values:
+
+    1. `User=<username>` -- user to run the service
+
+    1. `ExecStart=flask --app <path>/src/flask-app run` -- path to src folder
+
+    1. `systemctl start facebook-parse`
+
+    1. `systemctl enable facebook-parse`
+
+* Request example:
+    
+      curl --location 'http://127.0.0.1:5000/facebook-parse' \
+      --header 'Content-Type: application/json' \
+      --data '{
+      "url": "https://www.facebook.com/radiorestoran/"
+      }'
 
 ## Tests
 

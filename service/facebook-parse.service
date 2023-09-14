@@ -1,0 +1,12 @@
+[Unit]
+Description=Flask app
+After=network.target
+StartLimitIntervalSec=0[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=<username>
+ExecStart=flask --app <path>/src/flask-app run
+
+[Install]
+WantedBy=multi-user.target
