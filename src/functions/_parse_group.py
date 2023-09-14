@@ -16,7 +16,7 @@ import configparser
 from functions._clear_div import *
 
 
-def parse_group(url: str, debug: bool):
+def parse_group(url: str, debug: bool=False):
     """Parse facebook group with Selenium
 
     Args:
@@ -100,5 +100,6 @@ def parse_group(url: str, debug: bool):
     clean_image = clear_div(str(images), "image")
     d = clean_group_name | clean_text | clean_image
 
-    json_object = json.dumps(d, indent=4)
-    return json_object
+    return d
+    #json_object = json.dumps(d, indent=4)
+    #return json_object
