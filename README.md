@@ -73,6 +73,8 @@ Parse facebook group 1st page with `Python` and `Selenium`. Will get first post 
 
 ### Flask
 
+1. `sudo apt install python3-flask`
+
 1. Linux service:
 
        sudo cp service/facebook-parse.service /etc/systemd/system/facebook-parse.service
