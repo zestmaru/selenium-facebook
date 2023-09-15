@@ -9,15 +9,16 @@ from selenium.webdriver.firefox.options import Options as FF_OPTIONS
 import time
 import os
 from pathlib import Path
-import json
+#import json
 import configparser
 
 # Import functions
 from functions._clear_div import *
-
+from functions._print_debug import *
 
 def parse_group(url: str, debug: bool=False):
-    """Parse facebook group with Selenium
+    """
+    Parse facebook group with Selenium
 
     Args:
         url (str): Url
@@ -29,11 +30,8 @@ def parse_group(url: str, debug: bool=False):
         'image': ['link', 'link', 'link']}
     """
 
-    if debug:
-        print("[DEBUG] Debug ON \n")
-
-    if url == "" or url is None:
-        raise Exception("url cannot be empty...")
+    if not url:
+        raise ValueError("URL cannot be empty...")
 
 
     config = configparser.ConfigParser()
@@ -41,7 +39,7 @@ def parse_group(url: str, debug: bool=False):
     sep = os.sep
     cfg_path = str(os.path.join(os.path.dirname(__file__), '..' + sep + 'config.cfg'))
 
-    config.readfp(open(r''+cfg_path))
+    config.read(cfg_path)
     driver_path = config.get('browser', 'driver_path')
     browser_name = config.get('browser', 'browser_name')
     session_time = int(config.get('browser', 'session_time'))
@@ -49,24 +47,32 @@ def parse_group(url: str, debug: bool=False):
     path = Path(driver_path)
     if path.is_file():
         if debug:
-            print(f'[DEBUG] The file {path} exists \n\n')
+            print_debug(f"The file {path} exists")
     else:
-        raise Exception(f'The file {path} does not exist')
+        raise FileNotFoundError(f'The file {path} does not exist')
 
+    options = None
     if browser_name == 'Chrome':
-        service = CH_SERVICE(executable_path=r''+driver_path)
-        options = webdriver.ChromeOptions()
+        service = CH_SERVICE(executable_path=driver_path)
+        options = CH_OPTIONS()
         options.add_argument('--headless')
         driver = webdriver.Chrome(service=service, options=options)  # init browser
-    if browser_name == 'Firefox':
+    elif browser_name == 'Firefox':
         service = FF_SERVICE(executable_path=r''+driver_path)
-        options = webdriver.FirefoxOptions()
+        options = FF_OPTIONS()
         options.add_argument('--headless')
         driver = webdriver.Firefox(service=service, options=options)  # init browser
+    else:
+        raise ValueError(f'Unsupported browser: {browser_name}')
 
-    driver.get(url)  # open page
-    time.sleep(session_time)
-    response = driver.page_source  # get page
+    try:
+        driver.get(url)  # open page
+        time.sleep(session_time)
+        response = driver.page_source  # get page
+    except Exception as e:
+        print_debug(f"An error occurred while fetching the page: {e}")
+        return {}
+    
     driver.close()  # close browser
 
     soup = BeautifulSoup(response, 'html.parser')
@@ -78,36 +84,40 @@ def parse_group(url: str, debug: bool=False):
     text = soup.find_all(
         "span", {
             "class": "x193iq5w xeuugli x13faqbe x1vvkbs x10flsy6 x1lliihq x1s928wv xhkezso x1gmr53x x1cpjm7i x1fgarty x1943h6x x4zkp8e x41vudc x6prxxf xvq8zen xo1l8bm xzsf02u x1yc453h"})
+    
     # try to get multiple images firstly
     images = soup.find_all(
         "div", {
             "class": "x78zum5 x1iyjqo2 x5yr21d x1qughib x1pi30zi x1swvt13"})
     if images == []:
         if debug:
-            print("No multiple images.. Trying single image...")
+            print_debug("No multiple images.. Trying single image...")
         # this will always get 1st image in the post, so it should be after
         images = soup.find_all(
             "div", {
                 "class": "x6s0dn4 x1jx94hy x78zum5 xdt5ytf x6ikm8r x10wlt62 x1n2onr6 xh8yej3"})
+        
     group_name = soup.find_all(
         "h1", {"class": "x1heor9g x1qlqyl8 x1pd3egz x1a2a7pz"})
 
     if debug:
-        print("[DEBUG] group_name = " + " " + str(group_name) + "\n")
-        print("[DEBUG] text = " + " " + str(text) + "\n")
-        print("[DEBUG] images = " + " " + str(images) + "\n")
+        print_debug("group_name = " + str(group_name))
+        print_debug("text = " + str(text))
+        print_debug("images = " + str(images))
 
+    # Clear stuff from divs and create dictionary
     clean_group_name = clear_div(str(group_name), "group_name")
     clean_text = clear_div(str(text), "text")
     clean_image = clear_div(str(images), "image")
     d = clean_group_name | clean_text | clean_image
 
     if debug:
-        print("[DEBUG] clean_group_name = " + " " + str(clean_group_name) + "\n")
-        print("[DEBUG] clean_text = " + " " + str(clean_text) + "\n")
-        print("[DEBUG] clean_image = " + " " + str(clean_image) + "\n")
-        print("[DEBUG] d = " + " " + str(d) + "\n")
+        print_debug("clean_group_name = " + str(clean_group_name))
+        print_debug("clean_text = " + str(clean_text))
+        print_debug("clean_image = " + str(clean_image))
+        print_debug("d = " + str(d))
 
     return d
+
     #json_object = json.dumps(d, indent=4)
     #return json_object
