@@ -7,7 +7,7 @@ Type=simple
 Restart=always
 RestartSec=1
 User=<username>
-ExecStart=flask --app <path>/src/flask-app run
+ExecStart=flask --app <path>/src/flask-app run --host=0.0.0.0
 
 [Install]
 WantedBy=multi-user.target
