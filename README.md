@@ -107,6 +107,8 @@ Parse facebook group 1st page with `Python` and `Selenium`. Will get first post 
        "image": ["https://scontent-arn2-1.xx.fbcdn.net/v/t39.30808-6/375992353_1226713418233367_9090939920451904984_n.jpg?stp=cp6_dst-jpg_p526x296&_nc_cat=106&ccb=1-7&_nc_sid=49d041&_nc_ohc=TT0tIP3kyRcAX9gmTZf&_nc_ht=scontent-arn2-1.xx&oh=00_AfAVack443EulvG3-BjODURASJwzrleszkjKlgz0UXv0MA&oe=650957A4"]
       }
 
+* Logs will be written to `stc/flask_output.log` file
+
 ## Tests
 
 1. Edit `tests/groups.txt` file
