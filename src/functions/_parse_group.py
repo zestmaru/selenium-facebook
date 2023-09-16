@@ -71,7 +71,7 @@ def parse_group(url: str, debug: bool=False):
         response = driver.page_source  # get page
     except Exception as e:
         print_debug(f"An error occurred while fetching the page: {e}")
-        return -1
+        raise Exception(f"An error occurred while fetching the page: {e}")
     
     driver.close()  # close browser
 
