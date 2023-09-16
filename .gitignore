@@ -14,3 +14,6 @@ tests/output.txt
 
 #config
 src/config.cfg
+
+#logs
+flask_output.log
