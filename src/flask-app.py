@@ -8,7 +8,7 @@ from functions._parse_group import *
 
 app = Flask(__name__)
 
-log_filename = str(os.path.join(os.path.dirname(__file__), + 'flask_output.log'))
+log_filename = str(os.path.join(os.path.dirname(__file__), 'flask_output.log'))
 logging.basicConfig(filename=log_filename, level=logging.INFO, format="%(asctime)s [%(levelname)s]: %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
 
 class LogWriter:
