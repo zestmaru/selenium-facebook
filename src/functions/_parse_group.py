@@ -43,6 +43,7 @@ def parse_group(url: str, debug: bool=False):
     driver_path = config.get('browser', 'driver_path')
     browser_name = config.get('browser', 'browser_name')
     session_time = int(config.get('browser', 'session_time'))
+    cache_path = config.get('browser', 'cache_path')
 
     path = Path(driver_path)
     if path.is_file():
@@ -56,11 +57,13 @@ def parse_group(url: str, debug: bool=False):
         service = CH_SERVICE(executable_path=driver_path)
         options = CH_OPTIONS()
         options.add_argument('--headless')
+        options.add_argument(f'user-data-dir={cache_path}')
         driver = webdriver.Chrome(service=service, options=options)  # init browser
     elif browser_name == 'Firefox':
         service = FF_SERVICE(executable_path=r''+driver_path)
         options = FF_OPTIONS()
         options.add_argument('--headless')
+        options.add_argument(f'user-data-dir={cache_path}')
         driver = webdriver.Firefox(service=service, options=options)  # init browser
     else:
         raise ValueError(f'Unsupported browser: {browser_name}')
