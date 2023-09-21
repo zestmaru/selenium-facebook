@@ -81,6 +81,8 @@ Parse facebook group 1st page with `Python` and `Selenium`. Will get first post 
     
     Edit `/etc/systemd/system/facebook-parse.service` and change values:
 
+    1. `WorkingDirectory=<dir>` -- directory to run the service
+
     1. `User=<username>` -- user to run the service
 
     1. `ExecStart=flask --app <path>/src/flask-app run` -- path to src folder

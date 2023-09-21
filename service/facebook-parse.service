@@ -3,6 +3,7 @@ Description=Flask app
 After=network.target
 StartLimitIntervalSec=0
 [Service]
+WorkingDirectory=<dir>
 Type=simple
 Restart=always
 RestartSec=1
