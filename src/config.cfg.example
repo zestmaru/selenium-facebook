@@ -5,5 +5,5 @@ browser_name=Chrome
 driver_path=/usr/lib/chromium-browser/chromedriver
 # Time to open and load the page. Depends on a internet connection and hardware. Play with this value if you do not get any output.
 session_time=5
-# Browser cache path
+# Browser cache path (only for chrome)
 cache_path=browser_cache

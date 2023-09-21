@@ -63,7 +63,6 @@ def parse_group(url: str, debug: bool=False):
         service = FF_SERVICE(executable_path=r''+driver_path)
         options = FF_OPTIONS()
         options.add_argument('--headless')
-        options.add_argument(f'user-data-dir={cache_path}')
         driver = webdriver.Firefox(service=service, options=options)  # init browser
     else:
         raise ValueError(f'Unsupported browser: {browser_name}')
