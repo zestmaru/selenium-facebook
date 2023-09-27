@@ -86,8 +86,12 @@ def parse_group(url: str, debug: bool=False):
         if debug: 
             driver.save_screenshot('./1.png')
 
-        close_login_modal = driver.find_element(By.CSS_SELECTOR, "[aria-label=Close]")
-        close_login_modal.click() # close login modal
+        try:
+            close_login_modal = driver.find_element(By.CSS_SELECTOR, "[aria-label=Close]")
+            close_login_modal.click() # close login modal
+        except NoSuchElementException:
+            if debug:
+                print_debug("No login modal...")
         if debug: 
             driver.save_screenshot('./2.png')
 
@@ -95,8 +99,12 @@ def parse_group(url: str, debug: bool=False):
         if debug: 
             driver.save_screenshot('./3.png')
 
-        see_more_button = driver.find_element(By.XPATH, "//div[text()='See more']")
-        see_more_button.click() # click see more
+        try:
+            see_more_button = driver.find_element(By.XPATH, "//div[text()='See more']")
+            see_more_button.click() # click see more
+        except NoSuchElementException:
+            if debug:
+                print_debug("No see more button...")
         if debug: 
             driver.save_screenshot('./4.png')
 
