@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.chrome.service import Service as CH_SERVICE
 from selenium.webdriver.chrome.options import Options as CH_OPTIONS
 from selenium.webdriver.firefox.service import Service as FF_SERVICE
@@ -32,6 +33,8 @@ def parse_group(url: str, debug: bool=False):
 
     if not url:
         raise ValueError("URL cannot be empty...")
+    
+    url = url+'?locale=en_US' # force english lang on the page
 
 
     config = configparser.ConfigParser()
@@ -70,7 +73,33 @@ def parse_group(url: str, debug: bool=False):
     try:
         driver.get(url)  # open page
         time.sleep(session_time)
+
+        try:
+            decline_cookies = driver.find_element_by_xpath("//div[@aria-label='Decline optional cookies']");
+            decline_cookies.click()
+        except NoSuchElementException:
+            if debug:
+                print_debug("No cookies modal...")
+
+        if debug: 
+            driver.save_screenshot('./1.png')
+
+        close_login_modal = driver.find_element_by_css_selector("[aria-label=Close]")
+        close_login_modal.click() # close login modal
+        if debug: 
+            driver.save_screenshot('./2.png')
+
+        driver.execute_script("window.scrollTo(0, 1600)") # scroll to the post
+        if debug: 
+            driver.save_screenshot('./3.png')
+
+        see_more_button = driver.find_element_by_xpath("//div[text()='See more']")
+        see_more_button.click() # click see more
+        if debug: 
+            driver.save_screenshot('./4.png')
+
         response = driver.page_source  # get page
+
     except Exception as e:
         raise Exception(f"An error occurred while fetching the page: {e}")
     
@@ -102,6 +131,7 @@ def parse_group(url: str, debug: bool=False):
         "h1", {"class": "x1heor9g x1qlqyl8 x1pd3egz x1a2a7pz"})
 
     if debug:
+        #print_debug("page = " + str(response))
         print_debug("group_name = " + str(group_name))
         print_debug("text = " + str(text))
         print_debug("images = " + str(images))

@@ -3,3 +3,5 @@ beautifulsoup4>=4.12.2
 autopep8>=2.0.4
 configparser>=6.0.0
 Flask>=2.3.3
+Pillow>=10.0.1
+Selenium-Screenshot>=2.1.0

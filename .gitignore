@@ -11,9 +11,13 @@ __pycache__
 
 #tests
 tests/output.txt
+tests/page-example.html
 
 #config
 src/config.cfg
 
 #logs
 flask_output.log
+
+#screenshot debug
+*.png
