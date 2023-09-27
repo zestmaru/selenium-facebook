@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.chrome.service import Service as CH_SERVICE
 from selenium.webdriver.chrome.options import Options as CH_OPTIONS
@@ -71,11 +72,12 @@ def parse_group(url: str, debug: bool=False):
         raise ValueError(f'Unsupported browser: {browser_name}')
 
     try:
+        driver.set_window_size(800, 600)
         driver.get(url)  # open page
         time.sleep(session_time)
 
         try:
-            decline_cookies = driver.find_element_by_xpath("//div[@aria-label='Decline optional cookies']");
+            decline_cookies = driver.find_element(By.XPATH, "//div[@aria-label='Decline optional cookies']")
             decline_cookies.click()
         except NoSuchElementException:
             if debug:
@@ -84,7 +86,7 @@ def parse_group(url: str, debug: bool=False):
         if debug: 
             driver.save_screenshot('./1.png')
 
-        close_login_modal = driver.find_element_by_css_selector("[aria-label=Close]")
+        close_login_modal = driver.find_element(By.CSS_SELECTOR, "[aria-label=Close]")
         close_login_modal.click() # close login modal
         if debug: 
             driver.save_screenshot('./2.png')
@@ -93,7 +95,7 @@ def parse_group(url: str, debug: bool=False):
         if debug: 
             driver.save_screenshot('./3.png')
 
-        see_more_button = driver.find_element_by_xpath("//div[text()='See more']")
+        see_more_button = driver.find_element(By.XPATH, "//div[text()='See more']")
         see_more_button.click() # click see more
         if debug: 
             driver.save_screenshot('./4.png')
