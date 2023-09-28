@@ -106,7 +106,7 @@ def parse_group(url: str, debug: bool=False):
             driver.save_screenshot('./2.png')
 
         try:
-            post = driver.find_element_by_xpath("//div[contains(@class, 'x1iorvi4 x1pi30zi x1l90r2v x1swvt13')]")
+            post = driver.find_element(By.XPATH, "//div[contains(@class, 'x1iorvi4 x1pi30zi x1l90r2v x1swvt13')]")
             desired_y = (post.size['height'] / 2) + post.location['y']
             window_h = driver.execute_script('return window.innerHeight')
             window_y = driver.execute_script('return window.pageYOffset')
