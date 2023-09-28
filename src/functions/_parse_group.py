@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.chrome.service import Service as CH_SERVICE
 from selenium.webdriver.chrome.options import Options as CH_OPTIONS
 from selenium.webdriver.firefox.service import Service as FF_SERVICE
@@ -78,35 +79,59 @@ def parse_group(url: str, debug: bool=False):
 
         try:
             decline_cookies = driver.find_element(By.XPATH, "//div[@aria-label='Decline optional cookies']")
-            decline_cookies.click()
+            
+            try:
+                decline_cookies.click() # decline optional cookies
+            except Exception as e:
+                print_debug(f"Cannot decline cookies: {e}")
+
         except NoSuchElementException:
-            if debug:
-                print_debug("No cookies modal...")
+            print_debug("No cookies modal...")
 
         if debug: 
             driver.save_screenshot('./1.png')
 
         try:
             close_login_modal = driver.find_element(By.CSS_SELECTOR, "[aria-label=Close]")
-            close_login_modal.click() # close login modal
+            
+            try:
+                close_login_modal.click() # close modal
+            except Exception as e:
+                print_debug(f"Cannot close modal: {e}")
+
         except NoSuchElementException:
-            if debug:
-                print_debug("No login modal...")
+            print_debug("No login modal...")
+
         if debug: 
             driver.save_screenshot('./2.png')
 
-        driver.execute_script("window.scrollTo(0, 1600)") # scroll to the post
+        try:
+            post = driver.find_element_by_xpath("//div[contains(@class, 'x1iorvi4 x1pi30zi x1l90r2v x1swvt13')]")
+            desired_y = (post.size['height'] / 2) + post.location['y']
+            window_h = driver.execute_script('return window.innerHeight')
+            window_y = driver.execute_script('return window.pageYOffset')
+            current_y = (window_h / 2) + window_y
+            scroll_y_by = desired_y - current_y
+            driver.execute_script("window.scrollBy(0, arguments[0]);", scroll_y_by)
+        except Exception as e:
+            print_debug(f"Cannot scroll to the post: {e}")
+
         if debug: 
             driver.save_screenshot('./3.png')
 
         try:
             see_more_button = driver.find_element(By.XPATH, "//div[text()='See more']")
-            see_more_button.click() # click see more
+
+            try:
+                see_more_button.click() # click see more
+            except Exception as e:
+                print_debug(f"Cannot click on see more: {e}")
+
+            if debug: 
+                driver.save_screenshot('./4.png')
+
         except NoSuchElementException:
-            if debug:
-                print_debug("No see more button...")
-        if debug: 
-            driver.save_screenshot('./4.png')
+            print_debug("No see more button...")
 
         response = driver.page_source  # get page
 
