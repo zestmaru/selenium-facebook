@@ -2,9 +2,9 @@
 
 ## Intro
 
-Parse facebook group 1st page with `Python` and `Selenium`. Will get first post text and attached image(s).
+Parse facebook group 1st page with `Python` and `Selenium`. Will get text from first post and attached image(s).
 
-## Prerequisites 
+## Development prerequisites 
 
 1. Python >= 3.11.2
 
@@ -14,48 +14,9 @@ Parse facebook group 1st page with `Python` and `Selenium`. Will get first post 
 
 ## Installation
 
-1. Install browser driver:
+### Docker
 
-    `Chrome`:
-
-    * linux64)
-
-
-          wget https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip
-
-          unzip chromedriver_linux64.zip 
-
-    * arm64)
-        
-          sudo apt-get update
-
-          sudo apt-get install chromium-chromedriver
-        
-        chromedriver location: `/usr/lib/chromium-browser/chromedriver`
-
-    `Firefox`:
-
-    * linux64)
-
-          wget https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-linux64.tar.gz
-
-          tar -xf geckodriver-v0.33.0-linux64.tar.gz
-        
-       Also Firefox binary is required (in `PATH`).
-
-1. Create config:
-
-       cp src/config.cfg.example src/config.cfg
-
-1. Edit config
-    
-    And enter full path to the driver:
-
-       driver_path=<full path to the driver>
-    
-    And change `browser_name`:
-        
-       browser_name=<Firefox|Chrome>
+    docker compose up -d
 
 ## Usage
 
@@ -71,27 +32,7 @@ Parse facebook group 1st page with `Python` and `Selenium`. Will get first post 
        -d debug, --debug debug
                                 Debug output. Default False
 
-### Flask
-
-1. `sudo apt install python3-flask`
-
-1. Linux service:
-
-       sudo cp service/facebook-parse.service /etc/systemd/system/facebook-parse.service
-    
-    Edit `/etc/systemd/system/facebook-parse.service` and change values:
-
-    1. `WorkingDirectory=<dir>` -- directory to run the service
-
-    1. `User=<username>` -- user to run the service
-
-    1. `ExecStart=flask --app <path>/src/flask-app run` -- path to src folder
-
-    1. `systemctl daemon-reload`
-
-    1. `sudo systemctl start facebook-parse`
-
-    1. `sudo systemctl enable facebook-parse`
+### Flask docker
 
 * Request example:
     
