@@ -12,14 +12,15 @@ from selenium.webdriver.firefox.options import Options as FF_OPTIONS
 import time
 import os
 from pathlib import Path
-#import json
+# import json
 import configparser
 
 # Import functions
 from functions._clear_div import *
 from functions._print_debug import *
 
-def parse_group(url: str, debug: bool=False):
+
+def parse_group(url: str, debug: bool = False):
     """
     Parse facebook group with Selenium
 
@@ -28,21 +29,25 @@ def parse_group(url: str, debug: bool=False):
         debug (bool): Show debug output
 
     Returns:
-        dict: {'group_name': 'str', 
+        dict: {'group_name': 'str',
         'text': 'str',
         'image': ['link', 'link', 'link']}
     """
 
     if not url:
         raise ValueError("URL cannot be empty...")
-    
-    url = url+'?locale=en_US' # force english lang on the page
 
+    url = url + '?locale=en_US'  # force english lang on the page
 
     config = configparser.ConfigParser()
 
     sep = os.sep
-    cfg_path = str(os.path.join(os.path.dirname(__file__), '..' + sep + 'config.cfg'))
+    cfg_path = str(
+        os.path.join(
+            os.path.dirname(__file__),
+            '..' +
+            sep +
+            'config.cfg'))
 
     config.read(cfg_path)
     driver_path = config.get('browser', 'driver_path')
@@ -63,12 +68,18 @@ def parse_group(url: str, debug: bool=False):
         options = CH_OPTIONS()
         options.add_argument('--headless')
         options.add_argument(f'user-data-dir={cache_path}')
-        driver = webdriver.Chrome(service=service, options=options)  # init browser
+        options.add_argument('--no-sandbox')
+        options.add_argument('--disable-dev-shm-usage')
+        driver = webdriver.Chrome(
+            service=service,
+            options=options)  # init browser
     elif browser_name == 'Firefox':
-        service = FF_SERVICE(executable_path=r''+driver_path)
+        service = FF_SERVICE(executable_path=r'' + driver_path)
         options = FF_OPTIONS()
         options.add_argument('--headless')
-        driver = webdriver.Firefox(service=service, options=options)  # init browser
+        driver = webdriver.Firefox(
+            service=service,
+            options=options)  # init browser
     else:
         raise ValueError(f'Unsupported browser: {browser_name}')
 
@@ -78,56 +89,61 @@ def parse_group(url: str, debug: bool=False):
         time.sleep(session_time)
 
         try:
-            decline_cookies = driver.find_element(By.XPATH, "//div[@aria-label='Decline optional cookies']")
-            
+            decline_cookies = driver.find_element(
+                By.XPATH, "//div[@aria-label='Decline optional cookies']")
+
             try:
-                decline_cookies.click() # decline optional cookies
+                decline_cookies.click()  # decline optional cookies
             except Exception as e:
                 print_debug(f"Cannot decline cookies: {e}")
 
         except NoSuchElementException:
             print_debug("No cookies modal...")
 
-        if debug: 
+        if debug:
             driver.save_screenshot('./1.png')
 
         try:
-            close_login_modal = driver.find_element(By.CSS_SELECTOR, "[aria-label=Close]")
-            
+            close_login_modal = driver.find_element(
+                By.CSS_SELECTOR, "[aria-label=Close]")
+
             try:
-                close_login_modal.click() # close modal
+                close_login_modal.click()  # close modal
             except Exception as e:
                 print_debug(f"Cannot close modal: {e}")
 
         except NoSuchElementException:
             print_debug("No login modal...")
 
-        if debug: 
+        if debug:
             driver.save_screenshot('./2.png')
 
         try:
-            post = driver.find_element(By.XPATH, "//div[contains(@class, 'x1iorvi4 x1pi30zi x1l90r2v x1swvt13')]")
+            post = driver.find_element(
+                By.XPATH, "//div[contains(@class, 'x1iorvi4 x1pi30zi x1l90r2v x1swvt13')]")
             desired_y = (post.size['height'] / 2) + post.location['y']
             window_h = driver.execute_script('return window.innerHeight')
             window_y = driver.execute_script('return window.pageYOffset')
             current_y = (window_h / 2) + window_y
             scroll_y_by = desired_y - current_y
-            driver.execute_script("window.scrollBy(0, arguments[0]);", scroll_y_by)
+            driver.execute_script(
+                "window.scrollBy(0, arguments[0]);", scroll_y_by)
         except Exception as e:
             print_debug(f"Cannot scroll to the post: {e}")
 
-        if debug: 
+        if debug:
             driver.save_screenshot('./3.png')
 
         try:
-            see_more_button = driver.find_element(By.XPATH, "//div[text()='See more']")
+            see_more_button = driver.find_element(
+                By.XPATH, "//div[text()='See more']")
 
             try:
-                see_more_button.click() # click see more
+                see_more_button.click()  # click see more
             except Exception as e:
                 print_debug(f"Cannot click on see more: {e}")
 
-            if debug: 
+            if debug:
                 driver.save_screenshot('./4.png')
 
         except NoSuchElementException:
@@ -137,7 +153,7 @@ def parse_group(url: str, debug: bool=False):
 
     except Exception as e:
         raise Exception(f"An error occurred while fetching the page: {e}")
-    
+
     driver.close()  # close browser
 
     soup = BeautifulSoup(response, 'html.parser')
@@ -149,7 +165,7 @@ def parse_group(url: str, debug: bool=False):
     text = soup.find_all(
         "span", {
             "class": "x193iq5w xeuugli x13faqbe x1vvkbs x10flsy6 x1lliihq x1s928wv xhkezso x1gmr53x x1cpjm7i x1fgarty x1943h6x x4zkp8e x41vudc x6prxxf xvq8zen xo1l8bm xzsf02u x1yc453h"})
-    
+
     # try to get multiple images firstly
     images = soup.find_all(
         "div", {
@@ -161,12 +177,12 @@ def parse_group(url: str, debug: bool=False):
         images = soup.find_all(
             "div", {
                 "class": "x6s0dn4 x1jx94hy x78zum5 xdt5ytf x6ikm8r x10wlt62 x1n2onr6 xh8yej3"})
-        
+
     group_name = soup.find_all(
         "h1", {"class": "x1heor9g x1qlqyl8 x1pd3egz x1a2a7pz"})
 
     if debug:
-        #print_debug("page = " + str(response))
+        # print_debug("page = " + str(response))
         print_debug("group_name = " + str(group_name))
         print_debug("text = " + str(text))
         print_debug("images = " + str(images))
@@ -185,5 +201,5 @@ def parse_group(url: str, debug: bool=False):
 
     return d
 
-    #json_object = json.dumps(d, indent=4)
-    #return json_object
+    # json_object = json.dumps(d, indent=4)
+    # return json_object
