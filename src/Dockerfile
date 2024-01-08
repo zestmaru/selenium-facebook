@@ -2,16 +2,17 @@
 FROM python:3.10-alpine 
 
 WORKDIR /app
-COPY requirements.txt /app
-COPY config.cfg /app
-RUN pip install -r requirements.txt
-
 COPY . /app
 
-# chromedriver
 RUN apk update && apk add --no-cache bash \
+        gcc \
+        musl-dev \
+        linux-headers \
+        libffi-dev \
         chromium \
         chromium-chromedriver
+
+RUN pip install -r requirements.txt
 
 EXPOSE 5000
 
