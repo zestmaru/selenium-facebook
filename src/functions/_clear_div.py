@@ -1,6 +1,6 @@
 import re
 
-def clear_div(div: str, tag: str):
+def clear_div(div: str, tag: str) -> dict:
     """Clear div from trash and get useful info.
 
     Args:

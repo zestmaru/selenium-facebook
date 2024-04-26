@@ -1,4 +1,4 @@
-def print_debug(message):
+def print_debug(message: str) -> None:
     """
     Print a debug message.
 

@@ -20,7 +20,7 @@ from functions._clear_div import *
 from functions._print_debug import *
 
 
-def parse_group(url: str, debug: bool = False):
+def parse_group(url: str, debug: bool = False) -> dict:
     """
     Parse facebook group with Selenium
 
