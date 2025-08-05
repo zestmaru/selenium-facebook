@@ -175,7 +175,7 @@ def parse_group(url: str, debug: bool = False) -> dict:
                 "class": "x6s0dn4 x1jx94hy x78zum5 xdt5ytf x6ikm8r x10wlt62 x1n2onr6 xh8yej3"})
 
     group_name = soup.find_all(
-        "h1", {"class": "html-h1 xe8uvvx xdj266r x11i5rnm xat24cr x1mh8g0r xexx8yu x4uap5 x18d9i69 xkhd6sd x1vvkbs x1heor9g x1qlqyl8 x1pd3egz x1a2a7pz"})
+        "h1", {"class": "html-h1 xdj266r x14z9mp xat24cr x1lziwak xexx8yu xyri2b x18d9i69 x1c1uobl x1vvkbs x1heor9g x1qlqyl8 x1pd3egz x1a2a7pz"})
 
     if debug:
         # print_debug("page = " + str(response))
