@@ -2,6 +2,8 @@ from bs4 import BeautifulSoup
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.chrome.service import Service as CH_SERVICE
@@ -69,6 +71,7 @@ def parse_group(url: str, debug: bool = False) -> dict:
         options.add_argument('--headless')
         options.add_argument(f'user-data-dir={cache_path}')
         options.add_argument('--no-sandbox')
+        options.add_argument("--incognito")
         options.add_argument('--disable-dev-shm-usage')
         driver = webdriver.Chrome(
             service=service,
@@ -77,6 +80,7 @@ def parse_group(url: str, debug: bool = False) -> dict:
         service = FF_SERVICE(executable_path=r'' + driver_path)
         options = FF_OPTIONS()
         options.add_argument('--headless')
+        options.set_preference("browser.privatebrowsing.autostart", True)
         driver = webdriver.Firefox(
             service=service,
             options=options)  # init browser
@@ -87,6 +91,10 @@ def parse_group(url: str, debug: bool = False) -> dict:
         driver.set_window_size(1280, 820)
         driver.get(url)  # open page
         time.sleep(session_time)
+
+        WebDriverWait(driver, 10).until(
+            lambda d: d.execute_script('return document.readyState') == 'complete'
+        )
 
         try:
             decline_cookies = driver.find_element(
@@ -117,8 +125,9 @@ def parse_group(url: str, debug: bool = False) -> dict:
                 driver.save_screenshot('./2.png')
 
         try:
-            post = driver.find_element(
-                By.XPATH, "//div[contains(@class, 'html-div xdj266r x14z9mp x1lziwak x18d9i69 x1cy8zhl x78zum5 x1q0g3np xod5an3 xz9dl7a x1g0dm76 xpdmqnj')]")
+            # post = driver.find_element(
+            #     By.XPATH, "//div[contains(@class, 'html-div xdj266r x14z9mp x1lziwak x18d9i69 x1cy8zhl x78zum5 x1q0g3np xod5an3 xz9dl7a x1g0dm76 xpdmqnj')]")
+            post = driver.find_element(By.XPATH, '//div[@data-pagelet="TimelineFeedUnit_0"]')
             desired_y = (post.size['height'] / 2) + post.location['y']
             window_h = driver.execute_script('return window.innerHeight')
             window_y = driver.execute_script('return window.pageYOffset')
