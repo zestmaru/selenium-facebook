@@ -84,7 +84,7 @@ def parse_group(url: str, debug: bool = False) -> dict:
         raise ValueError(f'Unsupported browser: {browser_name}')
 
     try:
-        driver.set_window_size(1280, 720)
+        driver.set_window_size(1280, 820)
         driver.get(url)  # open page
         time.sleep(session_time)
 
