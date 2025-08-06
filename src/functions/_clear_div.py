@@ -21,6 +21,8 @@ def clear_div(div: str, tag: str) -> dict:
     elif tag == "image":
         div = re.sub("amp;", "", str(div))
         div = re.findall('src\\s*=\\s*"(.+?)"', str(div))
+        div = re.findall(r"https://[^\s\"'>]+", str(div))
+        div = list(set(div))
     elif tag == "group_name":
         div = re.sub("(<[^>]*>)", "", str(div))
         div = str(div)[1:-1]

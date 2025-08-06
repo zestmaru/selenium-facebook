@@ -159,13 +159,15 @@ def parse_group(url: str, debug: bool = False) -> dict:
     soup = BeautifulSoup(response, 'html.parser')
 
     text = soup.find_all(
-        "span", {
-            "class": "x193iq5w xeuugli x13faqbe x1vvkbs x10flsy6 x1lliihq x1s928wv xhkezso x1gmr53x x1cpjm7i x1fgarty x1943h6x x4zkp8e x41vudc x6prxxf xvq8zen xo1l8bm xzsf02u x1yc453h"})
+        # "span", {
+        #     "class": "x193iq5w xeuugli x13faqbe x1vvkbs x10flsy6 x1lliihq x1s928wv xhkezso x1gmr53x x1cpjm7i x1fgarty x1943h6x x4zkp8e x41vudc x6prxxf xvq8zen xo1l8bm xzsf02u x1yc453h"})
+        "div", {
+            "class": "xu06os2 x1ok221b"})
 
     # try to get multiple images firstly
     images = soup.find_all(
         "div", {
-            "class": "x78zum5 x1iyjqo2 x5yr21d x1qughib x1pi30zi x1swvt13"})
+            "class": "html-div xdj266r x14z9mp xat24cr x1lziwak xexx8yu xyri2b x18d9i69 x1c1uobl x1n2onr6"})
     if images == []:
         if debug:
             print_debug("No multiple images.. Trying single image...")
