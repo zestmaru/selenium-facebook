@@ -98,10 +98,9 @@ def parse_group(url: str, debug: bool = False) -> dict:
                 print_debug(f"Cannot decline cookies: {e}")
 
         except NoSuchElementException:
-            print_debug("No cookies modal...")
-
-        if debug:
-            driver.save_screenshot('./1.png')
+            if debug:
+                print_debug("No cookies modal...")
+                driver.save_screenshot('./1.png')
 
         try:
             close_login_modal = driver.find_element(
@@ -113,10 +112,9 @@ def parse_group(url: str, debug: bool = False) -> dict:
                 print_debug(f"Cannot close modal: {e}")
 
         except NoSuchElementException:
-            print_debug("No login modal...")
-
-        if debug:
-            driver.save_screenshot('./2.png')
+            if debug:
+                print_debug("No login modal...")
+                driver.save_screenshot('./2.png')
 
         try:
             post = driver.find_element(
@@ -129,10 +127,9 @@ def parse_group(url: str, debug: bool = False) -> dict:
             driver.execute_script(
                 "window.scrollBy(0, arguments[0]);", scroll_y_by)
         except Exception as e:
-            print_debug(f"Cannot scroll to the post: {e}")
-
-        if debug:
-            driver.save_screenshot('./3.png')
+            if debug:
+                print_debug(f"Cannot scroll to the post: {e}")
+                driver.save_screenshot('./3.png')
 
         try:
             see_more_button = driver.find_element(
@@ -147,7 +144,8 @@ def parse_group(url: str, debug: bool = False) -> dict:
                 driver.save_screenshot('./4.png')
 
         except NoSuchElementException:
-            print_debug("No see more button...")
+            if debug:
+                print_debug("No see more button...")
 
         response = driver.page_source  # get page
 
